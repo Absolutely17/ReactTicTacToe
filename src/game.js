@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+import API from 'API';
 
 class Square extends React.Component {
 
@@ -30,7 +30,7 @@ class Board extends React.Component {
         this.exitClick = this.exitClick.bind(this);
     }
     handleClick(i){
-        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/move',
+        API.post('/game/' + this.state.id + '/move',
             {cell:i,
             name:this.state.name})
             .then(res =>{
@@ -39,7 +39,7 @@ class Board extends React.Component {
             });
     }
     exitClick() {
-        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/exit',
+        API.post('/game/' + this.state.id + '/exit',
             {name:this.state.name})
             .then(() =>{
                 window.location.assign('/menu');
@@ -75,7 +75,7 @@ class Board extends React.Component {
     }
 
     tick() {
-        axios.get('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/state')
+        API.get('/game/' + this.state.id + '/state')
             .then(res => {
                 let binary_string = window.atob(res.data.squares);
                 let respondedSquares = new Int8Array(361);

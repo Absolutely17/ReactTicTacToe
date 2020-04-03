@@ -1,36 +1,44 @@
 import React from "react";
-import axios from 'axios';
+import API from 'API';
 
 class Menu extends React.Component {
     constructor(props) {
         super(props);
         this.joinClick = this.joinClick.bind(this);
+        this.spectateClick = this.spectateClick.bind(this);
         this.newGameClick = this.newGameClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
             games: [],
-            name: ''
+            name: '',
+            showAllGames:null
         };
         this.tick();
     }
     handleChange(event)
     {
-        this.setState({name:event.target.value});
+        const target = event.target;
+        const name = target.name;
+        const value = name === 'showAllGames' ? target.checked : target.value;
+        this.setState({[name]:value});
     }
     newGameClick(){
-        axios.post('https://tictactoe-task-abs.herokuapp.com/game/create',
+        API.post('/game/create',
             {name:this.state.name})
             .then(res => {
                 window.location.assign('/game?id=' + res.data.id + '&name=' + this.state.name);
             })
     }
     joinClick(gameId){
-        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + gameId + '/connect',
+        API.post('/game/' + gameId + '/connect',
             {gameId : gameId,
                 name:this.state.name})
             .then(() => {
                 window.location.assign('/game?id=' + gameId + '&name=' + this.state.name);
             })
+    }
+    spectateClick(gameId){
+        window.location.assign('/game?id=' + gameId);
     }
     componentDidMount() {
         this.timerID = setInterval(
@@ -39,7 +47,7 @@ class Menu extends React.Component {
         );
     }
     tick() {
-        axios.get('https://tictactoe-task-abs.herokuapp.com/games')
+        API.get('/games?all=' + this.state.showAllGames)
             .then(res => {
                 const games = res.data;
                 this.setState({games});
@@ -50,7 +58,8 @@ class Menu extends React.Component {
             <div className="menu">
                 <div className="menu-column">
             <div className="menuAttr">
-                <input placeholder="Enter name" className="inputName" type="text" value={this.state.name} onChange={this.handleChange}/>
+                <input name="name" placeholder="Enter name" className="inputName" type="text" value={this.state.name} onChange={this.handleChange}/>
+                <input name="showAllGames" type="checked" className="inputAllGames" checked={this.state.showAllGames}/>
                 <button onClick={() => this.newGameClick()} className="startGameBtn">Start New Game</button>
             </div>
                 <div className="listGames">
@@ -65,8 +74,9 @@ class Menu extends React.Component {
                         <tr key={i}>
                             <td>{data.id}</td>
                             <td>{data.firstPlayer}</td>
+                            <td>{data.secondPlayer}</td>
                             <td><button onClick={() => this.joinClick(data.id)}>Присоединиться</button></td>
-
+                            {data.opened ? <td><button onClick={() => this.spectateClick(data.id)}>Наблюдать</button></td> : null}
                         </tr>
                     ))}
                 </div>
