@@ -34,7 +34,7 @@ class Board extends React.Component {
         this.exitClick = this.exitClick.bind(this);
     }
     handleClick(i){
-        axios.post('http://localhost:8080/game/' + this.state.id + '/move',
+        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/move',
             {cell:i,
             name:this.state.name})
             .then(res =>{
@@ -71,7 +71,7 @@ class Board extends React.Component {
         );
     }
     exitClick() {
-        axios.post('http://localhost:8080/game/' + this.state.id + '/exit',
+        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/exit',
             {name:this.state.name})
             .then(res =>{
                 window.location.assign('/');
@@ -79,7 +79,7 @@ class Board extends React.Component {
     }
 
     tick() {
-        axios.get('http://localhost:8080/game/' + this.state.id + '/state')
+        axios.get('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/state')
             .then(res => {
                 var binary_string = window.atob(res.data.squares);
                 var respondedSquares = new Int8Array(361);

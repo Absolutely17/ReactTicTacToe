@@ -14,21 +14,21 @@ class Menu extends React.Component {
         };
     }
     newGameClick(){
-        axios.post('http://localhost:8080/game/create',
+        axios.post('https://tictactoe-task-abs.herokuapp.com/game/create',
             {name:this.state.name})
             .then(res => {
                 window.location.assign('/game?id=' + res.data.id + '&name=' + this.state.name);
             })
     }
     componentDidMount() {
-        axios.get('http://localhost:8080/games')
+        axios.get('https://tictactoe-task-abs.herokuapp.com/games')
             .then(res => {
                 const games = res.data;
                 this.setState({games});
             })
     }
     joinClick(data){
-        axios.post('http://localhost:8080/game/' + data + '/connect',
+        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + data + '/connect',
             {gameId : data,
             name:this.state.name})
             .then(() => {
