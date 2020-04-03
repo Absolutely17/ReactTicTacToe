@@ -61,7 +61,7 @@ class Menu extends React.Component {
                 <div className="menu-column">
             <div className="menuAttr">
                 <input name="name" placeholder="Enter name" className="inputName" type="text" value={this.state.name} onChange={this.handleChange}/>
-                <input name="showAllGames" type="checkbox" className="inputAllGames" checked={this.state.showAllGames} onChange={this.handleChange}>Показать все игры</input>
+                <input name="showAllGames" type="checkbox" className="inputAllGames" checked={this.state.showAllGames} onChange={this.handleChange}/>
                 <button onClick={() => this.newGameClick()} className="startGameBtn">Start New Game</button>
             </div>
                 <div className="listGames">
