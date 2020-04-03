@@ -2,10 +2,7 @@ import React from "react";
 import axios from 'axios';
 
 class Square extends React.Component {
-    constructor(props) {
-        super(props);
 
-    }
     render() {
         return (
             <button className="square"
@@ -19,7 +16,6 @@ class Square extends React.Component {
 class Board extends React.Component {
     constructor(props) {
         super(props);
-        var paused;
         this.state = {
             squares: Array(361).fill(null),
             id : this.props.id,
@@ -41,6 +37,13 @@ class Board extends React.Component {
                 if (res.data.successful)
                     this.moveTo(i);
             });
+    }
+    exitClick() {
+        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/exit',
+            {name:this.state.name})
+            .then(() =>{
+                window.location.assign('/menu');
+            })
     }
     moveTo(i, b = false){
         const squares = this.state.squares.slice();
@@ -70,20 +73,13 @@ class Board extends React.Component {
             1000
         );
     }
-    exitClick() {
-        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/exit',
-            {name:this.state.name})
-            .then(res =>{
-                window.location.assign('/menu');
-            })
-    }
 
     tick() {
         axios.get('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/state')
             .then(res => {
-                var binary_string = window.atob(res.data.squares);
-                var respondedSquares = new Int8Array(361);
-                for (var i=0;i<361;i++)
+                let binary_string = window.atob(res.data.squares);
+                let respondedSquares = new Int8Array(361);
+                for (let i=0;i<361;i++)
                     respondedSquares[i]=binary_string.charCodeAt(i);
                 this.setState({squares:respondedSquares});
                 if (this.state.mark==='N')
@@ -107,9 +103,9 @@ class Board extends React.Component {
     }
     render() {
         const table = [];
-        for (var i=0;i<19;i++) {
+        for (let i = 0; i < 19; i++) {
             const children = [];
-            for (var k = 0; k < 19; k++)
+            for (let k = 0; k < 19; k++)
                 children.push(this.renderSquare(19*i+k));
             table.push(<div className={'board-row'}>{children}</div>);
         }

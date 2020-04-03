@@ -10,7 +10,6 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    <div><p></p></div>
                     <Switch>
                         <Route path="/menu" component={Menu} />
                         <Route path="/game" component={Game} />

@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import React from "react";
 import axios from 'axios';
 
@@ -14,12 +13,30 @@ class Menu extends React.Component {
         };
         this.tick();
     }
+    handleChange(event)
+    {
+        this.setState({name:event.target.value});
+    }
     newGameClick(){
         axios.post('https://tictactoe-task-abs.herokuapp.com/game/create',
             {name:this.state.name})
             .then(res => {
                 window.location.assign('/game?id=' + res.data.id + '&name=' + this.state.name);
             })
+    }
+    joinClick(gameId){
+        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + gameId + '/connect',
+            {gameId : gameId,
+                name:this.state.name})
+            .then(() => {
+                window.location.assign('/game?id=' + gameId + '&name=' + this.state.name);
+            })
+    }
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.tick(),
+            5000
+        );
     }
     tick() {
         axios.get('https://tictactoe-task-abs.herokuapp.com/games')
@@ -28,34 +45,12 @@ class Menu extends React.Component {
                 this.setState({games});
             })
     }
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            3000
-        );
-    }
-    joinClick(data){
-        axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + data + '/connect',
-            {gameId : data,
-            name:this.state.name})
-            .then(() => {
-                window.location.assign('/game?id=' + data + '&name=' + this.state.name);
-            })
-    }
-    handleChange(event)
-    {
-        this.setState({name:event.target.value});
-    }
     render() {
-        const openGames = [];
-
-            openGames.push(this.state.games.map(game => <td>{game.id}{game.firstPlayer} - {game.secondPlayer}</td>))
-
         return (
-            <div class="menu">
+            <div className="menu">
                 <div className="menu-column">
             <div className="menuAttr">
-                <input placeholder="Enter name" className="inputName" type="text" value={this.state.name} onChange={this.handleChange}></input>
+                <input placeholder="Enter name" className="inputName" type="text" value={this.state.name} onChange={this.handleChange}/>
                 <button onClick={() => this.newGameClick()} className="startGameBtn">Start New Game</button>
             </div>
                 <div className="listGames">
