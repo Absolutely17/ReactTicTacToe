@@ -21,6 +21,8 @@ class Menu extends React.Component {
         const name = target.name;
         const value = name === 'showAllGames' ? target.checked : target.value;
         this.setState({[name]:value});
+        if (this.state.showAllGames)
+            this.tick();
     }
     newGameClick(){
         API.post('/game/create',
@@ -47,7 +49,7 @@ class Menu extends React.Component {
         );
     }
     tick() {
-        API.get('/games?all=' + this.state.showAllGames)
+        API.get('/games?isAll=' + this.state.showAllGames)
             .then(res => {
                 const games = res.data;
                 this.setState({games});
@@ -59,14 +61,15 @@ class Menu extends React.Component {
                 <div className="menu-column">
             <div className="menuAttr">
                 <input name="name" placeholder="Enter name" className="inputName" type="text" value={this.state.name} onChange={this.handleChange}/>
-                <input name="showAllGames" type="checkbox" className="inputAllGames" checked={this.state.showAllGames}/>
+                <input name="showAllGames" type="checkbox" className="inputAllGames" checked={this.state.showAllGames} onChange={this.handleChange}>Показать все игры</input>
                 <button onClick={() => this.newGameClick()} className="startGameBtn">Start New Game</button>
             </div>
                 <div className="listGames">
                     <thead>
                     <tr>
                         <th>№</th>
-                        <th>Имя хоста</th>
+                        <th>Имя первого игрока</th>
+                        <th>Имя второго игрока</th>
                         <th>Действие</th>
                     </tr>
                     </thead>
@@ -76,7 +79,7 @@ class Menu extends React.Component {
                             <td>{data.firstPlayer}</td>
                             <td>{data.secondPlayer}</td>
                             <td><button onClick={() => this.joinClick(data.id)}>Присоединиться</button></td>
-                            {data.opened ? <td><button onClick={() => this.spectateClick(data.id)}>Наблюдать</button></td> : null}
+                            {!data.opened ? (<td><button onClick={() => this.spectateClick(data.id)}>Наблюдать</button></td> ): null}
                         </tr>
                     ))}
                 </div>

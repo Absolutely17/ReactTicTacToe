@@ -39,11 +39,14 @@ class Board extends React.Component {
             });
     }
     exitClick() {
-        API.post('/game/' + this.state.id + '/exit',
-            {name:this.state.name})
-            .then(() =>{
-                window.location.assign('/menu');
-            })
+        if (this.state.name!=null) {
+            API.post('/game/' + this.state.id + '/exit',
+                {name: this.state.name})
+                .then(() => {
+                    window.location.assign('/menu');
+                })
+        }
+        else window.location.assign('/menu');
     }
     moveTo(i, b = false){
         const squares = this.state.squares.slice();
