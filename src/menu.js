@@ -12,6 +12,7 @@ class Menu extends React.Component {
             games: [],
             name: ''
         };
+        this.tick();
     }
     newGameClick(){
         axios.post('https://tictactoe-task-abs.herokuapp.com/game/create',
@@ -20,12 +21,18 @@ class Menu extends React.Component {
                 window.location.assign('/game?id=' + res.data.id + '&name=' + this.state.name);
             })
     }
-    componentDidMount() {
+    tick() {
         axios.get('https://tictactoe-task-abs.herokuapp.com/games')
             .then(res => {
                 const games = res.data;
                 this.setState({games});
             })
+    }
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.tick(),
+            3000
+        );
     }
     joinClick(data){
         axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + data + '/connect',
