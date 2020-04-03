@@ -1,13 +1,112 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+ol, ul {
+    padding-left: 30px;
+}
+.menu {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.menuAttr{
+    margin:0 auto;
+}
+.menu-column{
+    display:block;
+}
+
+.inputName {
+    display: block;
+    width: 200px;
+    padding: 0 10px;
+    height:30px;
+    font-family: 'Roboto', sans-serif;
+    background: none;
+    border: 1px solid #4a90e2;
+    transition: all 0.2s ease;
+    margin:0 auto;
+}
+.startGameBtn {
+    display:block;
+    font-size:16px;
+    color:#fff;
+    background: rgb(23, 212, 33);
+    border:0px;
+    width:150px;
+    height:30px;
+    margin:15px auto;
+}
+.startGameBtn:hover{
+    cursor:pointer;
+    background: rgb(57, 212, 72);
+
+}
+
+.listGames{
+
+}
+td {
+    padding:15px;
+}
+.board-row:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.square {
+    background: #fff;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 28px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 28px;
+}
+
+.square:focus {
+    outline: none;
+}
+
+.kbd-navigation .square:focus {
+    background: #ddd;
+}
+
+.game {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: center;
+}
+
+.game-info p {
+    text-align:center;
+    font-size:18px;
+    margin-bottom:30px;
+}
+
+.exitGame {
+    margin-top:15px;
+    text-align:center;
+}
+.exitBtn {
+    font-size:16px;
+    color:#fff;
+    background:rgb(212,75,56);
+    border:0px;
+    width:150px;
+    height:30px;
+}
+.exitBtn:hover {
+    cursor:pointer;
+    background: rgb(232,95,76);
 }
