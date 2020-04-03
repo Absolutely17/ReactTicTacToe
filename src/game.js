@@ -74,7 +74,7 @@ class Board extends React.Component {
         axios.post('https://tictactoe-task-abs.herokuapp.com/game/' + this.state.id + '/exit',
             {name:this.state.name})
             .then(res =>{
-                window.location.assign('/');
+                window.location.assign('/menu');
             })
     }
 
