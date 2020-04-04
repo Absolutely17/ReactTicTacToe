@@ -48,7 +48,7 @@ class Menu extends React.Component {
         );
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.showAllGames!=prevState.showAllGames)
+        if (this.state.showAllGames!==prevState.showAllGames)
             this.tick();
     }
 
@@ -65,9 +65,9 @@ class Menu extends React.Component {
                 <div className="menu-column">
             <div className="menuAttr">
                 <input name="name" placeholder="Enter name" className="inputName" type="text" value={this.state.name} onChange={this.handleChange}/>
-                    <div class="isAllGames">
+                    <div className="isAllGames">
                     <input id="allGames" name="showAllGames" type="checkbox"  checked={this.state.showAllGames} onChange={this.handleChange}/>
-                    <label for="allGames">Показать все игры</label>
+                    <label htmlFor="allGames">Показать все игры</label>
                     </div>
                 <button onClick={() => this.newGameClick()} className="startGameBtn">Start New Game</button>
             </div>
