@@ -30,11 +30,15 @@ ol, ul {
     transition: all 0.2s ease;
     margin:0 auto;
 }
+.isAllGames{
+    margin-top:15px;
+    text-align:center;
+}
 .startGameBtn {
     display:block;
     font-size:16px;
     color:#fff;
-    background: rgb(23, 212, 33);
+    background: rgb(212, 145, 20);
     border:0;
     width:150px;
     height:30px;
@@ -42,18 +46,33 @@ ol, ul {
 }
 .startGameBtn:hover{
     cursor:pointer;
-    background: rgb(57, 212, 72);
+    background: rgb(212, 133, 25);
 
 }
-
-.listGames{
-
+.spectateBtn {
+    margin-left:5px;
+    color:#fff;
+    padding:5px;
+    background: rgb(97, 108, 212);
+    border:0;
 }
+.joinBtn{
+    color:#fff;
+    padding:5px;
+    background: rgb(19, 212, 25);
+    border:0;
+}
+.spectateBtn:hover, .joinBtn:hover {
+    cursor:pointer;
+}
+
 td {
     padding:15px;
+    text-align:center;
 }
 th{
     padding:15px;
+    text-align:center;
 }
 .board-row:after {
     clear: both;
