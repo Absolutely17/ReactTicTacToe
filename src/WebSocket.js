@@ -12,26 +12,7 @@ class WebSocket extends React.Component{
         };
         this.handleChange = this.handleChange.bind(this);
     }
-    componentDidMount() {
-        console.log('Component did mount');
-        this.client = new Client();
 
-        this.client.configure({
-            brokerURL: 'ws://localhost:8080/chat-messaging',
-            onConnect: () => {
-                console.log('onConnect');
-
-                this.client.subscribe('/chat/message/' + this.state.id, message => {
-                    console.log(message);
-                    const mas = this.state.messages.slice();
-                    mas.push(JSON.parse(message.body));
-                    this.setState({messages:mas})
-                });
-            },
-        });
-
-        this.client.activate();
-    }
     handleChange(event)
     {
         const target = event.target;
@@ -48,18 +29,12 @@ class WebSocket extends React.Component{
             }
         };
         this.setState({text:''});
-        this.client.publish({destination: '/app/message', body: JSON.stringify(mes)});
+
     }
     render(){
         return (
             <div>
                 <div className="chat">
-                    {this.state.messages.map((data, i) => (
-                        <div className="message">
-                            <div className="authorMessage">Автор: {data.author}</div>
-                            <div className="textMessage"><p>{data.message}</p></div>
-                        </div>
-                    ))}
                     <div className="inputMessage">
                         <input name="text" value={this.state.text} onChange={this.handleChange} type="text"/>
                         <button className="sendMessageBtn" onClick={this.clickHandler}>Send</button>
