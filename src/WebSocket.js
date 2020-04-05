@@ -17,7 +17,7 @@ class WebSocket extends React.Component{
         this.client = new Client();
 
         this.client.configure({
-            brokerURL: 'ws://localhost:8080/chat-messaging',
+            brokerURL: 'ws://tictactoe-task-abs.herokuapp.com/chat-messaging',
             onConnect: () => {
                 console.log('onConnect');
 
