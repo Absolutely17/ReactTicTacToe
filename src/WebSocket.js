@@ -40,15 +40,17 @@ class WebSocket extends React.Component{
         this.setState({[name]:value});
     }
     clickHandler = () => {
-        let mes = {
-            'idChat' : this.state.id,
-            'message' : {
-                'author' : this.state.author,
-                'message' : this.state.text
-            }
-        };
-        this.setState({text:''});
-        this.client.publish({destination: '/app/message', body: JSON.stringify(mes)});
+        if (this.state.text !== '') {
+            let mes = {
+                'idChat': this.state.id,
+                'message': {
+                    'author': this.state.author,
+                    'message': this.state.text
+                }
+            };
+            this.setState({text: ''});
+            this.client.publish({destination: '/app/message', body: JSON.stringify(mes)});
+        }
     }
     render(){
         return (

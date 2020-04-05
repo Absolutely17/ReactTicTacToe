@@ -11,7 +11,9 @@ class Menu extends React.Component {
         this.state = {
             games: [],
             name: '',
-            showAllGames:false
+            showAllGames:false,
+            nameValid : false,
+            validError :'Пустой ник невозможен.'
         };
         this.tick();
     }
@@ -20,7 +22,19 @@ class Menu extends React.Component {
         const target = event.target;
         const name = target.name;
         const value = name === 'showAllGames' ? target.checked : target.value;
-        this.setState({[name]:value});
+        this.setState({[name]:value},
+            () => {this.validateName(name, value)});
+    }
+    validateName(fieldName, value) {
+        let nameValid = this.state.nameValid;
+        let validError = this.state.validError;
+        if (fieldName === 'name')
+        {
+            nameValid = value.length !== 0;
+            validError = nameValid ? '' : 'Пустой ник невозможен.';
+            this.setState({validError : validError,
+            nameValid : nameValid})
+        }
     }
     newGameClick(){
         API.post('/game/create',
@@ -35,6 +49,9 @@ class Menu extends React.Component {
                 name:this.state.name})
             .then(() => {
                 window.location.assign('/game?id=' + gameId + '&name=' + this.state.name);
+            })
+            .catch(error => {
+                    this.setState({validError:'Ваш никнейм совпадает с никнеймом хоста.'});
             })
     }
     spectateClick(gameId){
@@ -64,11 +81,12 @@ class Menu extends React.Component {
                 <div className="menu-column">
             <div className="menuAttr">
                 <input name="name" placeholder="Enter name" className="inputName" type="text" value={this.state.name} onChange={this.handleChange}/>
-                    <div className="isAllGames">
+                    <p className="validName">{this.state.validError}</p>
+                <div className="isAllGames">
                     <input id="allGames" name="showAllGames" type="checkbox"  checked={this.state.showAllGames} onChange={this.handleChange}/>
                     <label htmlFor="allGames">Показать все игры</label>
                     </div>
-                <button onClick={() => this.newGameClick()} className="startGameBtn">Start New Game</button>
+                <button disabled={!this.state.nameValid} onClick={() => this.newGameClick()} className="startGameBtn">Start New Game</button>
             </div>
                 <div className="listGames">
                     <thead>
@@ -84,7 +102,7 @@ class Menu extends React.Component {
                             <td>{data.id}</td>
                             <td>{data.firstPlayer}</td>
                             <td>{data.secondPlayer}</td>
-                            <td>{data.opened ? (<button className="joinBtn" onClick={() => this.joinClick(data.id)}>Присоединиться</button>) : null}
+                            <td>{data.opened ? (<button disabled={!this.state.nameValid} className="joinBtn" onClick={() => this.joinClick(data.id)}>Присоединиться</button>) : null}
                             <button className="spectateBtn" onClick={() => this.spectateClick(data.id)}>Наблюдать</button></td>
                         </tr>
                     ))}

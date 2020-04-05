@@ -65,7 +65,18 @@ ol, ul {
 .spectateBtn:hover, .joinBtn:hover {
     cursor:pointer;
 }
+.joinBtn[disabled], .startGameBtn[disabled] {
+    background:grey;
+}
+.joinBtn[disabled]:hover, .startGameBtn[disabled]:hover {
+    cursor:not-allowed;
 
+}
+.validName {
+    color:red;
+    font-size:13px;
+    text-align:center;
+}
 td {
     padding:15px;
     text-align:center;
