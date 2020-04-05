@@ -132,3 +132,30 @@ th{
     cursor:pointer;
     background: rgb(232,95,76);
 }
+
+.chat {
+    position:absolute;
+    right:8%;
+    top:15%;
+    border:1px solid grey;
+    height:400px;
+    overflow:scroll;
+    width:250px;
+}
+.chat::-webkit-scrollbar-track {border-radius: 4px;}
+.chat::-webkit-scrollbar {width: 6px;}
+.chat::-webkit-scrollbar-thumb {border-radius: 4px;background: #f0f2f5;}
+.chat:hover::-webkit-scrollbar-thumb {background: #6a7d9b;}
+.inputMessage {
+    bottom:26%;
+    width:250px;
+    position:fixed;
+}
+
+.authorMessage {
+    color:#808080;
+    margin:5px;
+}
+.textMessage {
+    margin:5px;
+}

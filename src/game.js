@@ -1,5 +1,6 @@
 import React from "react";
 import API from "./API";
+import WebSocket from "./WebSocket";
 
 class Square extends React.Component {
 
@@ -144,6 +145,7 @@ class Game extends React.Component {
                 <div className="game-board">
                     <Board id={this.state.id} name={this.state.name} />
                 </div>
+                <WebSocket idChat={this.state.id} author={this.state.name}/>
             </div>
         );
     }
