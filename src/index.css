@@ -105,7 +105,12 @@ th{
     text-align: center;
     width: 28px;
 }
-
+.red {
+    color:red;
+}
+.green{
+    color:green;
+}
 .square:focus {
     outline: none;
 }
